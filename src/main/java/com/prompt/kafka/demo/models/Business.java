@@ -14,4 +14,11 @@ public class Business {
     private String brandName;
     private String openDate;
 
+    @Override
+    public String toString(){
+        String business = "Business : {" + "id : " + id + "RegisterNumber : " + RegisterNumber + "name : " + name+
+                "brandName : " + brandName + "openDate : " + openDate + "}";
+
+        return business;
+    }
 }

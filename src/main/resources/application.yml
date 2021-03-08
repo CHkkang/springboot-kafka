@@ -8,7 +8,12 @@ spring:
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       retries: 3
+  datasource:
+    url: jdbc:mysql://localhost:3306/revenue?useUnicode=true&characterEncoding=utf8
+    username: chkkang
+    password: 1234
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+
 kafka:
   topic:
-    my-topic: my-topic
-    my-topic2: my-topic2
+    business-topic: business

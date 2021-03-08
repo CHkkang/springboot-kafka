@@ -34,6 +34,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
     implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.4.0.RELEASE'
 
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+
+
 }
 
 test {

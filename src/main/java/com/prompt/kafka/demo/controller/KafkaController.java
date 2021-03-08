@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 @RestController
 public class KafkaController {
     @Value("${kafka.topic.my-topic}")
-    String myTopic;
-    @Value("${kafka.topic.my-topic2}")
-    String myTopic2;
+    String businessTopic;
 
     private final BusinessProducerService producer;
 
@@ -22,7 +20,6 @@ public class KafkaController {
 
     @PostMapping
     public void sendMessageToKafkaTopic(@RequestParam("name") String name) {
-        this.producer.sendMessage(myTopic, new Business());
-        this.producer.sendMessage(myTopic2, new Business());
+        this.producer.sendMessage(businessTopic, new Business());
     }
 }
