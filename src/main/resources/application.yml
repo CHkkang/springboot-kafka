@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      retries: 3
+kafka:
+  topic:
+    my-topic: my-topic
+    my-topic2: my-topic2
