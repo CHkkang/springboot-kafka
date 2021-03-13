@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: local
+server:
+  port: 8080
+
+---
+spring:
+  profiles: local
+
+  kafka:
+    bootstrap-servers: host:port
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: business
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  datasource:
+    url: 
+    username:
+    password:
+    driver-class-name:
