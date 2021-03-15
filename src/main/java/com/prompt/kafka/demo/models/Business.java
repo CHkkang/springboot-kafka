@@ -3,12 +3,16 @@ package com.prompt.kafka.demo.models;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class Business {
-    private List<Business> mainList;
+public class Business implements Serializable {
+
+    private static final long serialVersionUID = 1907569777241442102L;
+
+
     @Id
     private int id;
     
@@ -16,10 +20,6 @@ public class Business {
     private String name;
     private String brandName;
     private Date openDate;
-
-    public List<Business> getMainList() {
-        return mainList;
-    }
 
     @Override
     public String toString(){
