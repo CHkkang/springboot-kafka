@@ -1,30 +1,26 @@
 package com.prompt.kafka.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prompt.kafka.demo.builder.KafkaBuilder;
-import com.prompt.kafka.demo.service.BusinessConsumerService;
-import lombok.RequiredArgsConstructor;
-import org.apache.camel.CamelContext;
-import org.apache.camel.ConsumerTemplate;
-import org.apache.camel.EndpointInject;
-import org.apache.camel.ProducerTemplate;
+import com.prompt.kafka.demo.models.Business;
+
+import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.DefaultCamelContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import javax.management.Notification;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
-@RequiredArgsConstructor
-@RestController("/message")
+@RestController
+@RequestMapping("/message")
 public class KafkaController {
-    ObjectMapper mapper = new ObjectMapper();
 
+    @Autowired
     CamelContext camelContext;
 
     @Autowired
@@ -35,7 +31,7 @@ public class KafkaController {
     @Qualifier("KafkaRouteConsumer")
     RouteBuilder kafkaRouteConsumer;
 
-    @EndpointInject
+    @EndpointInject(uri = "direct:kafkaRoute")
     ProducerTemplate kafkaProducer;
 
     ConsumerTemplate kafkaConsumer;
@@ -50,23 +46,19 @@ public class KafkaController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public void get(HttpServletRequest request, HttpServletResponse response) {
+    /**
+     * POST a business, send it as a message to Kafka.
+     *
+     * @param business
+     *            the {@link Business} to be posted.
+     */
+    @PostMapping
+    public void producer(@RequestBody Business business) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            kafkaProducer.sendBody("direct:kafkaRoute", "This is a message from the /message route!");
+            kafkaProducer.sendBody("direct:kafkaRoute", mapper.writeValueAsString(business));
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public void post(HttpServletRequest request, HttpServletResponse response, @RequestBody Notification notification) {
-        try {
-            kafkaProducer.sendBody("direct:kafkaRoute", mapper.writeValueAsString(notification));
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-    }
-
-
 }
