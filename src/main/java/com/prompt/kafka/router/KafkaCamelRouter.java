@@ -1,7 +1,7 @@
 package com.prompt.kafka.router;
 
 import com.prompt.kafka.controller.DataPusherController;
-import com.prompt.kafka.service.KafkaInputBean;
+import com.prompt.kafka.service.KafkaService;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.kafka.KafkaConstants;
@@ -20,7 +20,7 @@ public class KafkaCamelRouter{
                 from("direct:kafkaRoute")
                         .setHeader(KafkaConstants.KEY, constant("Camel"))
                         .to("kafka:{{kafka.topic}}?brokers={{kafka.host}}:{{kafka.port}}")
-                        .bean(KafkaInputBean.class);
+                        .bean(KafkaService.class, "print");
             }
         };
     }
@@ -34,7 +34,7 @@ public class KafkaCamelRouter{
                         "&groupId={{kafka.group-id}}" +
                         "&autoOffsetReset={{kafka.auto-offset-reset}}" +
                         "&consumersCount=1")
-                        .bean(DataPusherController.class);
+                        .bean(DataPusherController.class, "save");
             }
         };
     }
