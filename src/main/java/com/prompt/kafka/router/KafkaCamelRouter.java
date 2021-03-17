@@ -1,16 +1,16 @@
-package com.prompt.kafka.demo.router;
+package com.prompt.kafka.router;
+
+import com.prompt.kafka.controller.DataPusherController;
+import com.prompt.kafka.service.KafkaInputBean;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.kafka.KafkaConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class KafkaCamelRouter{
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaCamelRouter.class);
 
     @Bean(name = "KafkaRouteProducer")
     public RouteBuilder kafkaRouteProducer() {
@@ -19,7 +19,7 @@ public class KafkaCamelRouter{
             public void configure(){
                 from("direct:kafkaRoute")
                         .setHeader(KafkaConstants.KEY, constant("Camel"))
-                        .to("kafka:business?brokers=192.168.50.176:9092")
+                        .to("kafka:{{kafka.topic}}?brokers={{kafka.host}}:{{kafka.port}}")
                         .bean(KafkaInputBean.class);
             }
         };
@@ -30,8 +30,11 @@ public class KafkaCamelRouter{
         return new RouteBuilder(){
             @Override
             public void configure(){
-                from("kafka:business?brokers=192.168.50.176:9092&groupId=business&autoOffsetReset=earliest&consumersCount=1")
-                        .bean(KafkaOutputBean.class);
+                from("kafka:{{kafka.topic}}?brokers={{kafka.host}}:{{kafka.port}}" +
+                        "&groupId={{kafka.group-id}}" +
+                        "&autoOffsetReset={{kafka.auto-offset-reset}}" +
+                        "&consumersCount=1")
+                        .bean(DataPusherController.class);
             }
         };
     }

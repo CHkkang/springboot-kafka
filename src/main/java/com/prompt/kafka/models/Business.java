@@ -1,21 +1,21 @@
-package com.prompt.kafka.demo.models;
+package com.prompt.kafka.models;
 
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Builder
 @Table(name = "business")
 public class Business{
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="register_number", nullable = false)
+    @Column(name="register_number", unique = true, nullable = false)
     private String registerNumber;
 
     @Column(name="name", nullable = false)
@@ -26,4 +26,8 @@ public class Business{
 
     @Column(name="open_date", nullable = false)
     private Date openDate;
+
+    public Business() {
+
+    }
 }

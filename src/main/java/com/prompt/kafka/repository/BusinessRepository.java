@@ -1,6 +1,6 @@
-package com.prompt.kafka.demo.repo;
+package com.prompt.kafka.repository;
 
-import com.prompt.kafka.demo.models.Business;
+import com.prompt.kafka.models.Business;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

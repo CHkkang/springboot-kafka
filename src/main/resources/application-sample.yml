@@ -1,27 +1,16 @@
 spring:
   profiles:
     active: local
-server:
-  port: 8080
-
----
-spring:
-  profiles: local
-
-  kafka:
-    bootstrap-servers: 192.168.50.176:9092
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: business
-      auto-offset-reset: earliest
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-
   datasource:
     url: jdbc:mysql://localhost:3306/revenue_dev?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: Ptech6441
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+
+kafka:
+  topic:
+  host:
+  port:
+  group-id:
+  auto-offset-reset:

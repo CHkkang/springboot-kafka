@@ -1,7 +1,7 @@
-package com.prompt.kafka.demo.controller;
+package com.prompt.kafka.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prompt.kafka.demo.models.Business;
+import com.prompt.kafka.models.Business;
 
 import org.apache.camel.*;
 import org.apache.camel.builder.RouteBuilder;
@@ -11,10 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/message")
